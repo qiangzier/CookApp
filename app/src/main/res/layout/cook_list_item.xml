@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data class="CookListItemBinding">
+        <variable
+            name="cookModel"
+            type="com.hzq.cookapp.model.CookModel" />
+
+        <variable
+            name="callback"
+            type="com.hzq.cookapp.callback.ClickCallback" />
+    </data>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="5dp"
+        android:onClick="@{() -> callback.click(cookModel)}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/image"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                app:roundedCornerRadius="5dp"
+                app:roundBottomLeft="false"
+                app:roundBottomRight="false"
+                app:progressBarImage="@mipmap/project_loading_icon"
+                app:progressBarImageScaleType="centerCrop"
+                app:progressBarAutoRotateInterval="1500"
+                app:failureImage="@mipmap/project_error_default_icon"
+                app:failureImageScaleType="centerCrop"
+                android:background="@color/color_F5F5F5"
+                />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="16dp"
+                android:textSize="18dp"
+                android:text="@{ cookModel.name}"
+                tools:text="sss"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</layout>
