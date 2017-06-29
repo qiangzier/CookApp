@@ -10,6 +10,9 @@ import com.hzq.cookapp.R;
 import com.hzq.cookapp.adapter.CookListAdapter;
 import com.hzq.cookapp.callback.ClickCallback;
 import com.hzq.cookapp.model.CookModel;
+import com.hzq.cookapp.ui.header.SinaRefreshView;
+import com.hzq.cookapp.ui.listener.UpAndDownPullAdapter;
+import com.hzq.cookapp.ui.PullUpAndDownRefreshView;
 import com.hzq.cookapp.viewmodel.CookListViewModel;
 
 import java.util.List;
@@ -22,9 +25,11 @@ import java.util.List;
  */
 
 public class CookListFragment extends BaseFragment {
+    private PullUpAndDownRefreshView refreshView;
     private RecyclerView recyclerView;
     private CookListAdapter adapter = null;
     private String cid;
+    CookListViewModel viewModel;
 
     @Override
     protected int getLayoutId() {
@@ -41,16 +46,38 @@ public class CookListFragment extends BaseFragment {
             }
         });
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
+        refreshView = (PullUpAndDownRefreshView) rootView.findViewById(R.id.refreshView);
         recyclerView.setAdapter(adapter);
 
         cid = mArguments.getString("cid");
         setTitle(mArguments.getString("name"));
 
-        CookListViewModel.getInstance(mActivity,cid).
-                getObserableList().observe(this, new Observer<List<CookModel>>() {
+        viewModel = CookListViewModel.getInstance(mActivity,cid);
+        viewModel.getObserableList().observe(this, new Observer<List<CookModel>>() {
             @Override
             public void onChanged(@Nullable List<CookModel> cookModels) {
+                if(refreshView.isRefreshVisible())
+                    refreshView.onFinishRefreshed();
+                if(refreshView.isLoadingVisible())
+                    refreshView.onFinishLoadMore();
                 adapter.setData(cookModels);
+            }
+        });
+
+        refreshView.setHeaderView(new SinaRefreshView(mActivity));
+        refreshView.startRefresh();
+        refreshView.setFloatRefresh(false);  //悬浮模式
+//        refreshView.setEnableOverScroll(true); //不允许越界回弹
+//        refreshView.setPureScrollModeOn(true);
+        refreshView.setUpAndDownPullAdapter(new UpAndDownPullAdapter() {
+            @Override
+            public void onRefreshing(PullUpAndDownRefreshView refreshLayout) {
+                viewModel.onRefresh();
+            }
+
+            @Override
+            public void onLoadingMore(PullUpAndDownRefreshView refreshLayout) {
+                viewModel.onLoadMore();
             }
         });
     }

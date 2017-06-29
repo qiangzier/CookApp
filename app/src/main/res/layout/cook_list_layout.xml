@@ -11,12 +11,21 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
+            <com.hzq.cookapp.ui.PullUpAndDownRefreshView
+                android:id="@+id/refreshView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:layoutManager="LinearLayoutManager"
-                android:background="@color/color_FFFFFF"/>
+                app:tr_wave_height="140dp"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="LinearLayoutManager"
+                    android:background="@color/color_FFFFFF"
+                    android:overScrollMode="never"/>
+            </com.hzq.cookapp.ui.PullUpAndDownRefreshView>
 
         </LinearLayout>
     </LinearLayout>

@@ -117,7 +117,7 @@ public class NetHelper {
     }
 
     public static void getCooksByCId(String cid,RequestCall<ListDataResponse<CookModel>> callback){
-        getCooksByCId(cid,"",1,100,callback);
+        getCooksByCId(cid,"",1,20,callback);
     }
 
     public static void getCookById(String id, final RequestCall<CookModel> callback){

@@ -12,6 +12,7 @@ import com.hzq.cookapp.net.ListDataResponse;
 import com.hzq.cookapp.net.NetHelper;
 import com.hzq.cookapp.net.RequestCall;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,17 +25,39 @@ import java.util.List;
 public class CookListViewModel extends BaseViewModel {
 
     public String cid;
+    private int curPage = 1;
+    private int offset = 20;
+    private List<CookModel> sourceData;
     private MutableLiveData<List<CookModel>> obserableList;
     public CookListViewModel(Application application,String cid) {
         super(application);
         this.cid = cid;
-
+        sourceData = new ArrayList<>();
         obserableList = new MutableLiveData<>();
 
-        NetHelper.getCooksByCId(cid,new RequestCall<ListDataResponse<CookModel>>() {
+        loadData();
+    }
+
+    public void onRefresh(){
+        curPage = 1;
+        loadData();
+    }
+
+    public void onLoadMore(){
+        ++curPage;
+        loadData();
+    }
+
+    private void loadData(){
+        NetHelper.getCooksByCId(cid,"",curPage,offset,new RequestCall<ListDataResponse<CookModel>>() {
             @Override
             public void success(ListDataResponse<CookModel> cookModelListDataResponse) {
-                obserableList.setValue(cookModelListDataResponse.list);
+                if(curPage == 1)
+                    sourceData.clear();
+                if(cookModelListDataResponse.list != null){
+                    sourceData.addAll(cookModelListDataResponse.list);
+                }
+                obserableList.setValue(sourceData);
             }
         });
     }
