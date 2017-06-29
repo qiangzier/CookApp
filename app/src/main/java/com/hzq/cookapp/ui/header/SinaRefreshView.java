@@ -95,7 +95,7 @@ public class SinaRefreshView extends FrameLayout implements IHeaderView {
             refreshArrow.setRotation(fraction * headHeight / maxHeadHeight * 180);
             if(refreshArrow.getVisibility() == INVISIBLE){
                 refreshArrow.setVisibility(VISIBLE);
-//                loadingView.setVisibility(INVISIBLE);
+                loadingView.setVisibility(INVISIBLE);
             }
         }
     }
@@ -104,7 +104,7 @@ public class SinaRefreshView extends FrameLayout implements IHeaderView {
     public void startAnim(float maxHeadHeight, float headHeight) {
         refreshTextView.setText(refreshingStr);
         refreshArrow.setVisibility(INVISIBLE);
-//        loadingView.setVisibility(VISIBLE);
+        loadingView.setVisibility(VISIBLE);
         ((AnimationDrawable)loadingView.getDrawable()).start();
     }
 
@@ -116,7 +116,7 @@ public class SinaRefreshView extends FrameLayout implements IHeaderView {
     @Override
     public void reset() {
         refreshArrow.setVisibility(VISIBLE);
-//        loadingView.setVisibility(INVISIBLE);
+        loadingView.setVisibility(INVISIBLE);
         refreshTextView.setText(pullDownStr);
     }
 }

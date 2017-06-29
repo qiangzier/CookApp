@@ -218,48 +218,16 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
         return mChildView;
     }
 
-    /**===================animProcessor start=============================**/
-    public void scrollHeadByMove(float moveY){
-        animProcessor.scrollHeadByMove(moveY);
-    }
-
-    public void scrollBottomByMove(float moveY){
-        animProcessor.scrollBottomByMove(moveY);
-    }
-
-    public void dealPullDownRelease(){
-        animProcessor.dealPullDownRelease();
-    }
-
-    public void dealPullUpRelease(){
-        animProcessor.dealPullUpRelease();
-    }
-
     public AnimProcessor getAnimProcessor(){
         return animProcessor;
-    }
-    /**===================animProcessor end=============================**/
-
-
-    /**===================open api=============================**/
-    public void setOverScrollTopShow(boolean overScrollTopShow) {
-        isOverScrollTopShow = overScrollTopShow;
-    }
-
-    public void setOverScrollBottomShow(boolean overScrollBottomShow) {
-        isOverScrollBottomShow = overScrollBottomShow;
-    }
-
-    public boolean isRefreshVisible() {
-        return isRefreshVisible;
-    }
-
-    public boolean isLoadingVisible() {
-        return isLoadingVisible;
     }
 
     public int getHeadHeight(){
         return (int)mHeadHeight;
+    }
+
+    public void setHeadHeight(float mHeadHeight) {
+        this.mHeadHeight = mHeadHeight;
     }
 
     public float getMaxHeadHeight() {
@@ -270,10 +238,6 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
         this.mWaveHeight = mWaveHeight;
     }
 
-    public void setHeadHeight(float mHeadHeight) {
-        this.mHeadHeight = mHeadHeight;
-    }
-
     public float getBottomHeight() {
         return mBottomHeight;
     }
@@ -282,12 +246,52 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
         this.mBottomHeight = mBottomHeight;
     }
 
-    public boolean isExHeadLocked(){
-        return isExHeadLocked;
+    public boolean isRefreshVisible() {
+        return isRefreshVisible;
     }
 
-    public boolean isPureScrollModeOn() {
-        return isPureScrollModeOn;
+    /**
+     * 是否启用下拉刷新
+     * @param refreshVisible
+     */
+    public void setRefreshVisible(boolean refreshVisible) {
+        isRefreshVisible = refreshVisible;
+    }
+
+    public boolean isLoadingVisible() {
+        return isLoadingVisible;
+    }
+
+    /**
+     * 是否启用加载更多
+     * @param loadingVisible
+     */
+    public void setLoadingVisible(boolean loadingVisible) {
+        isLoadingVisible = loadingVisible;
+    }
+
+    public boolean isOverScrollTopShow(){
+        return isOverScrollTopShow;
+    }
+
+    /**
+     * 是否越界回弹时显示头部动画
+     * @param overScrollTopShow
+     */
+    public void setOverScrollTopShow(boolean overScrollTopShow) {
+        isOverScrollTopShow = overScrollTopShow;
+    }
+
+    public boolean isOverScrollBottomShow() {
+        return isOverScrollBottomShow;
+    }
+
+    /**
+     * 越界回弹时是否显示底部动画
+     * @param overScrollBottomShow
+     */
+    public void setOverScrollBottomShow(boolean overScrollBottomShow) {
+        isOverScrollBottomShow = overScrollBottomShow;
     }
 
     public boolean isEnableOverScroll() {
@@ -303,6 +307,128 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
     }
 
     /**
+     * 设置越界高度
+     * @param mOverScrollHeight
+     */
+    public void setOverScrollHeight(float mOverScrollHeight) {
+        this.mOverScrollHeight = mOverScrollHeight;
+    }
+
+    public int getOverScrollHeight() {
+        return (int)mOverScrollHeight;
+    }
+
+    /**
+     * 判断下拉刷新或上拉加载更多是否启用
+     * @return
+     */
+    public boolean allowOverScroll(){
+        return (!isRefreshVisible && !isLoadingVisible);
+    }
+
+    public boolean autoLoadMore(){
+        return autoLoadMore;
+    }
+
+    /**
+     * 设置是否滑到底部时自动加载更多
+     * @param autoLoadMore 为true表示底部越界时主动进入加载更多模式，否则直接弹回
+     */
+    public void setAutoLoadMore(boolean autoLoadMore) {
+        this.autoLoadMore = autoLoadMore;
+    }
+
+    public int getTouchSlop(){
+        return ViewConfiguration.get(getContext()).getScaledTouchSlop();
+    }
+
+    public View getHeader() {
+        return mHeadLayout;
+    }
+
+    public View getExHeader(){
+        return mExtraHeadLayout;
+    }
+
+    public View getFooter(){
+        return mBottomLayout;
+    }
+
+    public void resetHeaderView(){
+        if(mHeaderView != null)
+            mHeaderView.reset();
+    }
+
+    public void resetBottomView(){
+        if(mBottomView != null)
+            mBottomView.reset();
+    }
+
+    public boolean isFloatRefresh() {
+        return floatRefresh;
+    }
+
+    /**
+     * 是否开启悬浮模式
+     * @param floatRefresh
+     */
+    public void setFloatRefresh(boolean floatRefresh) {
+        this.floatRefresh = floatRefresh;
+    }
+
+    /**
+     * 开启刷新
+     */
+    public void startRefresh(){
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setStatePTD();
+                if(!isPureScrollModeOn() && mChildView != null){
+                    setRefreshVisible(true);
+                    animProcessor.animHeadToRefresh();
+                }
+            }
+        });
+    }
+
+    /**
+     * 开启加载更多
+     */
+    public void startLoadMore(){
+        post(new Runnable() {
+            @Override
+            public void run() {
+                setStatePBU();
+                if(!isPureScrollModeOn() && mChildView != null){
+                    setLoadingVisible(true);
+                    animProcessor.animBottomToLoad();
+                }
+            }
+        });
+    }
+
+    public boolean allowPullDown(){
+        return enableRefresh;
+    }
+
+    public boolean allowPullUp(){
+        return enableLoadmore;
+    }
+
+    public void setEnableLoadmore(boolean enableLoadmore) {
+        this.enableLoadmore = enableLoadmore;
+    }
+
+    public boolean isExHeadLocked(){
+        return isExHeadLocked;
+    }
+
+    public boolean isPureScrollModeOn() {
+        return isPureScrollModeOn;
+    }
+
+    /**
      * 是否开启纯净的越界回弹模式，开启时刷新和加载更多控件都不显示
      * @param pureScrollModeOn
      */
@@ -315,26 +441,6 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
             setHeadHeight(mOverScrollHeight);
             setBottomHeight(mOverScrollHeight);
         }
-    }
-
-    public boolean allowOverScroll(){
-        return (!isRefreshVisible && !isLoadingVisible);
-    }
-
-    public void setRefreshVisible(boolean refreshVisible) {
-        isRefreshVisible = refreshVisible;
-    }
-
-    /**
-     * 设置越界高度
-     * @param mOverScrollHeight
-     */
-    public void setmOverScrollHeight(float mOverScrollHeight) {
-        this.mOverScrollHeight = mOverScrollHeight;
-    }
-
-    public int getOverScrollHeight() {
-        return (int)mOverScrollHeight;
     }
 
     /**
@@ -366,56 +472,6 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
 
     public boolean isOsBottomLocked() {
         return isOverScrollBottomLocked;
-    }
-
-    public void setLoadingVisible(boolean loadingVisible) {
-        isLoadingVisible = loadingVisible;
-    }
-
-    public boolean isOverScrollTopShow(){
-        return isOverScrollTopShow;
-    }
-
-    public boolean isOverScrollBottomShow() {
-        return isOverScrollBottomShow;
-    }
-
-    public boolean autoLoadMore(){
-        return autoLoadMore;
-    }
-
-    /**
-     * 设置是否滑到底部时自动加载更多
-     * @param autoLoadMore 为true表示底部越界时主动进入加载更多模式，否则直接弹回
-     */
-    public void setAutoLoadMore(boolean autoLoadMore) {
-        this.autoLoadMore = autoLoadMore;
-    }
-
-    public View getHeader() {
-        return mHeadLayout;
-    }
-
-    public View getExHeader(){
-        return mExtraHeadLayout;
-    }
-
-    public View getFooter(){
-        return mBottomLayout;
-    }
-
-    public int getTouchSlop(){
-        return ViewConfiguration.get(getContext()).getScaledTouchSlop();
-    }
-
-    public void resetHeaderView(){
-        if(mHeaderView != null)
-            mHeaderView.reset();
-    }
-
-    public void resetBottomView(){
-        if(mBottomView != null)
-            mBottomView.reset();
     }
 
     /**
@@ -460,22 +516,6 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
     }
 
     /**
-     * 开启刷新
-     */
-    public void startRefresh(){
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setStatePTD();
-                if(!isPureScrollModeOn() && mChildView != null){
-                    setRefreshVisible(true);
-                    animProcessor.animHeadToRefresh();
-                }
-            }
-        });
-    }
-
-    /**
      * 手动调用finishRefresh或者finishLoadmore之后调用
      */
     public void onFinishRefreshed(){
@@ -484,46 +524,6 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
 
     public void onFinishLoadMore(){
         pullListener.onFinishLoadMore();
-    }
-
-    /**
-     * 开启加载更多
-     */
-    public void startLoadMore(){
-        post(new Runnable() {
-            @Override
-            public void run() {
-                setStatePBU();
-                if(!isPureScrollModeOn() && mChildView != null){
-                    setLoadingVisible(true);
-                    animProcessor.animBottomToLoad();
-                }
-            }
-        });
-    }
-
-    public boolean allowPullDown(){
-        return enableRefresh;
-    }
-
-    public boolean allowPullUp(){
-        return enableLoadmore;
-    }
-
-    public void setEnableLoadmore(boolean enableLoadmore) {
-        this.enableLoadmore = enableLoadmore;
-    }
-
-    public boolean isFloatRefresh() {
-        return floatRefresh;
-    }
-
-    /**
-     * 是否开启悬浮模式
-     * @param floatRefresh
-     */
-    public void setFloatRefresh(boolean floatRefresh) {
-        this.floatRefresh = floatRefresh;
     }
 
     /**

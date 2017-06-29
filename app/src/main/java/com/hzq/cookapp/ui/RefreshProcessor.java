@@ -51,24 +51,24 @@ public class RefreshProcessor {
                     dy = Math.min(refreshView.getMaxHeadHeight() * 2,dy);
                     dy = Math.max(0,dy);
 
-                    refreshView.scrollHeadByMove(dy);
+                    refreshView.getAnimProcessor().scrollHeadByMove(dy);
                     return true;
                 }else if(refreshView.isStatePBU()){
                     //加载更多
                     dy = Math.min(refreshView.getBottomHeight() * 2,Math.abs(dy));
                     dy = Math.max(0,dy);
 
-                    refreshView.scrollBottomByMove(dy);
+                    refreshView.getAnimProcessor().scrollBottomByMove(dy);
                     return true;
                 }else
                     return false;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 if(refreshView.isStatePTD()){
-                    refreshView.dealPullDownRelease();
+                    refreshView.getAnimProcessor().dealPullDownRelease();
                     return true;
                 }else if(refreshView.isStatePBU()){
-                    refreshView.dealPullUpRelease();
+                    refreshView.getAnimProcessor().dealPullUpRelease();
                     return true;
                 }
         }
