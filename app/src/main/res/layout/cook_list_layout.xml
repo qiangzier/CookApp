@@ -15,7 +15,6 @@
                 android:id="@+id/refreshView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:tr_wave_height="140dp"
                 >
 
                 <android.support.v7.widget.RecyclerView

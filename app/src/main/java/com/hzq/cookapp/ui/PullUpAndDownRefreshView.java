@@ -227,7 +227,7 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
     }
 
     public void setHeadHeight(float mHeadHeight) {
-        this.mHeadHeight = mHeadHeight;
+        this.mHeadHeight = DensityUtil.dp2px(getContext(), mHeadHeight);
     }
 
     public float getMaxHeadHeight() {
@@ -235,7 +235,7 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
     }
 
     public void setWaveHeight(float mWaveHeight) {
-        this.mWaveHeight = mWaveHeight;
+        this.mWaveHeight = DensityUtil.dp2px(getContext(), mWaveHeight);
     }
 
     public float getBottomHeight() {
@@ -243,7 +243,7 @@ public class PullUpAndDownRefreshView extends RelativeLayout {
     }
 
     public void setBottomHeight(float mBottomHeight) {
-        this.mBottomHeight = mBottomHeight;
+        this.mBottomHeight = DensityUtil.dp2px(getContext(), mBottomHeight);
     }
 
     public boolean isRefreshVisible() {

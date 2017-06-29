@@ -10,9 +10,9 @@ import com.hzq.cookapp.R;
 import com.hzq.cookapp.adapter.CookListAdapter;
 import com.hzq.cookapp.callback.ClickCallback;
 import com.hzq.cookapp.model.CookModel;
-import com.hzq.cookapp.ui.header.SinaRefreshView;
-import com.hzq.cookapp.ui.listener.UpAndDownPullAdapter;
 import com.hzq.cookapp.ui.PullUpAndDownRefreshView;
+import com.hzq.cookapp.ui.header.bezierlayout.BezierView;
+import com.hzq.cookapp.ui.listener.UpAndDownPullAdapter;
 import com.hzq.cookapp.viewmodel.CookListViewModel;
 
 import java.util.List;
@@ -64,11 +64,14 @@ public class CookListFragment extends BaseFragment {
             }
         });
 
-        refreshView.setHeaderView(new SinaRefreshView(mActivity));
+        BezierView bezierView = new BezierView(mActivity);
+        bezierView.setRountProgressColor(getResources().getColor(R.color.colorPrimary));
+        bezierView.setWaveColor(getResources().getColor(R.color.color_F5F5F5));
+        bezierView.setRippleColor(getResources().getColor(R.color.color_FFFFFF));
+        refreshView.setWaveHeight(160);
+        refreshView.setHeaderView(bezierView);
+//        refreshView.setHeaderView(new SinaRefreshView(mActivity));
         refreshView.startRefresh();
-        refreshView.setFloatRefresh(false);  //悬浮模式
-//        refreshView.setEnableOverScroll(true); //不允许越界回弹
-//        refreshView.setPureScrollModeOn(true);
         refreshView.setUpAndDownPullAdapter(new UpAndDownPullAdapter() {
             @Override
             public void onRefreshing(PullUpAndDownRefreshView refreshLayout) {
