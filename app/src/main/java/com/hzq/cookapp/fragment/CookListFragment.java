@@ -10,10 +10,10 @@ import com.hzq.cookapp.R;
 import com.hzq.cookapp.adapter.CookListAdapter;
 import com.hzq.cookapp.callback.ClickCallback;
 import com.hzq.cookapp.model.CookModel;
-import com.hzq.cookapp.ui.PullUpAndDownRefreshView;
-import com.hzq.cookapp.ui.header.bezierlayout.BezierView;
-import com.hzq.cookapp.ui.listener.UpAndDownPullAdapter;
 import com.hzq.cookapp.viewmodel.CookListViewModel;
+import com.hzq.refresh.PullUpAndDownRefreshView;
+import com.hzq.refresh.header.bezierlayout.BezierView;
+import com.hzq.refresh.listener.UpAndDownPullAdapter;
 
 import java.util.List;
 
@@ -66,8 +66,9 @@ public class CookListFragment extends BaseFragment {
 
         BezierView bezierView = new BezierView(mActivity);
         bezierView.setRountProgressColor(getResources().getColor(R.color.colorPrimary));
-        bezierView.setWaveColor(getResources().getColor(R.color.color_F5F5F5));
+        bezierView.setWaveColor(getResources().getColor(R.color.colorPrimary));
         bezierView.setRippleColor(getResources().getColor(R.color.color_FFFFFF));
+        bezierView.setRountDotColor(getResources().getColor(R.color.Orange));
         refreshView.setWaveHeight(160);
         refreshView.setHeaderView(bezierView);
 //        refreshView.setHeaderView(new SinaRefreshView(mActivity));

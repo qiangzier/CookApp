@@ -6,4 +6,9 @@
     <color name="color_F5F5F5">#CCCCCC</color>
     <color name="color_FFFFFF">#FFFFFF</color>
 
+    <color name="Orange">#e75946</color>
+    <color name="Yellow">#f4d227</color>
+    <color name="Blue">#4674e7</color>
+    <color name="Blue_light">#5e86e9</color>
+    <color name="Green">#0ba62c</color>
 </resources>
