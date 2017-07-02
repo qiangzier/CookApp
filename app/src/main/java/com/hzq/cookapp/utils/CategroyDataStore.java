@@ -2,7 +2,7 @@ package com.hzq.cookapp.utils;
 
 import com.hzq.cookapp.callback.Callback;
 import com.hzq.cookapp.db.entity.CategoryEntity;
-import com.hzq.cookapp.db.entity.CookDatabaseHelper;
+import com.hzq.cookapp.db.CookDatabaseHelper;
 import com.hzq.cookapp.net.NetHelper;
 
 import java.util.List;
@@ -40,4 +40,30 @@ public class CategroyDataStore {
             }
         },Task.UI_THREAD_EXECUTOR);
     }
+
+    public static void getParentCateGroy(final Callback<Boolean> callback){
+        Task.callInBackground(new Callable<CategoryEntity>() {
+            @Override
+            public CategoryEntity call() throws Exception {
+                return CookDatabaseHelper.getCategroyDao().getParentCategroy("-100");
+            }
+        }).continueWith(new Continuation<CategoryEntity, Boolean>() {
+            @Override
+            public Boolean then(Task<CategoryEntity> task) throws Exception {
+                if(task.getResult() == null){
+                    NetHelper.getCategroy(new Callback<List<CategoryEntity>>() {
+                        @Override
+                        public void call(List<CategoryEntity> entities) {
+                            callback.call(true);
+                        }
+                    });
+                    return false;
+                }else{
+                    callback.call(true);
+                    return true;
+                }
+            }
+        },Task.UI_THREAD_EXECUTOR);
+    }
+
 }

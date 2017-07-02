@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.hzq.cookapp.CookDetailActivity;
 import com.hzq.cookapp.R;
 import com.hzq.cookapp.adapter.CookListAdapter;
 import com.hzq.cookapp.callback.ClickCallback;
@@ -37,12 +36,17 @@ public class CookListFragment extends BaseFragment {
     }
 
     @Override
+    public boolean isShowToolbar() {
+        return false;
+    }
+
+    @Override
     public void initView(View rootView) {
         adapter = new CookListAdapter();
         adapter.setClick(new ClickCallback<CookModel>() {
             @Override
             public void click(CookModel t) {
-                CookDetailActivity.startAction(mActivity,t);
+//                CookDetailActivity.startAction(mActivity,t);
             }
         });
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
@@ -50,7 +54,7 @@ public class CookListFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
 
         cid = mArguments.getString("cid");
-        setTitle(mArguments.getString("name"));
+//        setTitle(mArguments.getString("name"));
 
         viewModel = CookListViewModel.getInstance(mActivity,cid);
         viewModel.getObserableList().observe(this, new Observer<List<CookModel>>() {
@@ -66,7 +70,12 @@ public class CookListFragment extends BaseFragment {
 
         BezierView bezierView = new BezierView(mActivity);
         bezierView.setRountProgressColor(getResources().getColor(R.color.colorPrimary));
-        bezierView.setWaveColor(getResources().getColor(R.color.colorPrimary));
+        int color = mArguments.getInt("waveColor",0);
+        if(color != 0){
+            bezierView.setWaveColor(getResources().getColor(color));
+        }else{
+            bezierView.setWaveColor(getResources().getColor(R.color.colorPrimary));
+        }
         bezierView.setRippleColor(getResources().getColor(R.color.color_FFFFFF));
         bezierView.setRountDotColor(getResources().getColor(R.color.Orange));
         refreshView.setWaveHeight(160);

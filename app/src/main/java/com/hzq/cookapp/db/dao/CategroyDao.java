@@ -1,4 +1,4 @@
-package com.hzq.cookapp.db;
+package com.hzq.cookapp.db.dao;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
@@ -35,6 +35,7 @@ public interface CategroyDao {
     @Query("select * from cook_categroy")
     List<CategoryEntity> getCategroys1();
 
-
+    @Query("select * from cook_categroy where parentId = :parentId")
+    CategoryEntity getParentCategroy(String parentId);
 
 }

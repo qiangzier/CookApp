@@ -46,8 +46,7 @@ public class CategroyViewModel extends BaseViewModel {
             @Override
             public void call(List<CategoryEntity> entities) {
                 sourceData = entities;
-                List<CategoryEntity> fList1 = searchByCid("-100");
-                List<CategoryEntity> fList = searchByCid(fList1.get(0).getCtgId());
+                List<CategoryEntity> fList = searchByCid("-100");
 
                 observableDataF.setValue(fList);
                 if(fList != null && fList.size() > 1){

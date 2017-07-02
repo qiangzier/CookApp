@@ -1,10 +1,12 @@
 package com.hzq.cookapp.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.hzq.cookapp.CookDetailActivity;
 import com.hzq.cookapp.R;
 import com.hzq.cookapp.callback.ClickCallback;
 import com.hzq.cookapp.databinding.CookListItemBinding;
@@ -24,6 +26,7 @@ public class CookListAdapter extends RecyclerView.Adapter<CookListAdapter.ViewHo
 
     private List<CookModel> mData;
     private ClickCallback<CookModel> click;
+    private Context context;
 
     public void setClick(ClickCallback<CookModel> click) {
         this.click = click;
@@ -42,16 +45,24 @@ public class CookListAdapter extends RecyclerView.Adapter<CookListAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         CookListItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()),
                 R.layout.cook_list_item,parent,false);
         return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mBinding.setCookModel(mData.get(position));
         holder.mBinding.image.setImageURI(mData.get(position).recipe.img);
-        holder.mBinding.setCallback(click);
+//        holder.mBinding.setCallback(click);
+        holder.mBinding.setCallback(new ClickCallback<CookModel>() {
+
+            @Override
+            public void click(CookModel t) {
+                CookDetailActivity.startAction(context,holder.mBinding.image,t);
+            }
+        });
     }
 
     @Override

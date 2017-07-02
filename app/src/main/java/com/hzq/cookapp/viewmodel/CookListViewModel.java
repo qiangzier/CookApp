@@ -69,7 +69,7 @@ public class CookListViewModel extends BaseViewModel {
     public static CookListViewModel getInstance(BaseActivity activity, String cid){
         Factory factory = new Factory(activity.getApplication(),cid);
         CookListViewModel viewModel =
-                ViewModelProviders.of(activity,factory).get(CookListViewModel.class);
+                ViewModelProviders.of(activity,factory).get(CookListViewModel.class.getSimpleName() + "--" + cid,CookListViewModel.class);
         return viewModel;
     }
 

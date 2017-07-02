@@ -1,11 +1,11 @@
-package com.hzq.cookapp.db.entity;
+package com.hzq.cookapp.db;
 
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 
-import com.hzq.cookapp.db.CategroyDao;
-import com.hzq.cookapp.db.CookDatabase;
+import com.hzq.cookapp.db.dao.CategroyDao;
+import com.hzq.cookapp.db.dao.SelectCategoryDao;
 
 /**
  * @author: hezhiqiang
@@ -37,5 +37,9 @@ public class CookDatabaseHelper {
 
     public static CategroyDao getCategroyDao(){
         return cookDatabase.getCategrouDao();
+    }
+
+    public static SelectCategoryDao getSelectCategoryDao(){
+        return cookDatabase.getSelectCategoryDao();
     }
 }

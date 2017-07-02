@@ -3,8 +3,9 @@ package com.hzq.cookapp.net;
 import android.text.TextUtils;
 
 import com.hzq.cookapp.CookApplication;
+import com.hzq.cookapp.db.CookDatabaseHelper;
 import com.hzq.cookapp.db.entity.CategoryEntity;
-import com.hzq.cookapp.db.entity.CookDatabaseHelper;
+import com.hzq.cookapp.db.entity.SelectCategoryEntity;
 import com.hzq.cookapp.model.CategoryInfo;
 import com.hzq.cookapp.model.CookModel;
 import com.hzq.cookapp.utils.CookUtils;
@@ -45,6 +46,7 @@ public class NetHelper {
                     public Boolean call() throws Exception {
                         saveCategroyInfo(categoryInfo);
                         CookDatabaseHelper.getCategroyDao().insert(result);
+                        CookDatabaseHelper.getSelectCategoryDao().insert(convertData(result));
                         return true;
                     }
                 }).continueWith(new Continuation<Boolean, Void>() {
@@ -76,15 +78,38 @@ public class NetHelper {
 
     }
 
+    private static List<SelectCategoryEntity> convertData(List<CategoryEntity> list){
+        List<SelectCategoryEntity> result = new ArrayList<>();
+        if(list != null && list.size() > 6){
+            int j = 0;
+            for (CategoryEntity categoryEntity : list) {
+                if(TextUtils.equals("-100",categoryEntity.getParentId())){
+                    continue;
+                }
+                j++;
+                result.add(new SelectCategoryEntity(categoryEntity.getCtgId(),categoryEntity.getName()));
+                if(j > 16)
+                    break;
+            }
+        }
+        return result;
+    }
+
     private static List<CategoryEntity> result = new ArrayList<>();
+    private static String parentId = "";
     private static List<CategoryEntity> saveCategroyInfo(CategoryInfo categoryInfo) {
         if(categoryInfo != null){
             CategoryEntity info = categoryInfo.categoryInfo;
             if(info != null){
                 if (TextUtils.isEmpty(info.getParentId())){
                     info.setParentId("-100");
+                    parentId = info.getCtgId();
+                }else {
+                    if (TextUtils.equals(parentId, info.getParentId())) {
+                        info.setParentId("-100");
+                    }
+                    result.add(info);
                 }
-                result.add(info);
             }
 
             if(categoryInfo.childs != null && categoryInfo.childs.size() > 0){

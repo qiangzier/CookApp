@@ -19,7 +19,9 @@ public class CookListActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_layout);
+        initToolbar();
+        setTitle(getIntent().getStringExtra("name"));
 
         CookListFragment fragment = new CookListFragment();
         Bundle bundle = new Bundle();

@@ -19,7 +19,7 @@ import android.view.View;
 public class BaseActivity extends AppCompatActivity implements LifecycleRegistryOwner{
 
     private LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
-    public Toolbar toolbar;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,8 +30,6 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
 
     protected void initToolbar(){
         toolbar = (Toolbar) findViewById(R.id.toolBar);
-//        CookUtils.setImmersiveStatusBar(this);
-//        CookUtils.setImmersiveStatusBarToolbar(toolbar,this);
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +39,10 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
         });
         if(getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
     @Override

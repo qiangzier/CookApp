@@ -37,7 +37,9 @@ public abstract class BaseFragment extends LifecycleFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(getLayoutId(),container,false);
-        initToolbar(view);
+        if(isShowToolbar()) {
+            initToolbar(view);
+        }
         initView(view);
         ButterKnife.bind(this, view);
         return view;
@@ -45,6 +47,10 @@ public abstract class BaseFragment extends LifecycleFragment {
 
     public void initView(View rootView){
 
+    }
+
+    public boolean isShowToolbar(){
+        return true;
     }
 
     protected abstract int getLayoutId();

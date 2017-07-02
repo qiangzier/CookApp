@@ -16,10 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleGravity="center_horizontal"
-            app:expandedTitleMarginTop="174dp"
+            app:expandedTitleGravity="center_horizontal|bottom"
             app:expandedTitleTextAppearance="@style/textToolbarTitle"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -27,7 +26,8 @@
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/bgImg"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:transitionName="@string/transition_cook_detail_imgv_bg"/>
 
             </RelativeLayout>
 
