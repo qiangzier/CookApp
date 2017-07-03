@@ -52,8 +52,12 @@ public class CookDetailActivity extends BaseActivity {
         setContentView(R.layout.cook_detail_layout);
         //解决fresco图片不显示的问题
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setSharedElementEnterTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.CENTER_CROP, ScalingUtils.ScaleType.CENTER_CROP));
-            getWindow().setSharedElementReturnTransition(DraweeTransition.createTransitionSet(ScalingUtils.ScaleType.FIT_CENTER, ScalingUtils.ScaleType.CENTER_CROP));
+            getWindow().setSharedElementEnterTransition(
+                    DraweeTransition.createTransitionSet(
+                            ScalingUtils.ScaleType.CENTER_CROP, ScalingUtils.ScaleType.CENTER_CROP));
+            getWindow().setSharedElementReturnTransition(
+                    DraweeTransition.createTransitionSet(
+                            ScalingUtils.ScaleType.CENTER_CROP, ScalingUtils.ScaleType.CENTER_CROP));
         }
         ButterKnife.bind(this);
         initToolbar();
