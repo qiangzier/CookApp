@@ -74,4 +74,5 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
 
     compile project(':refresh')
+    compile project(':indicator')
 }

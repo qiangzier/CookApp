@@ -33,6 +33,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
         notifyDataSetChanged();
     }
 
+    public List<SelectCategoryEntity> getCategroyData() {
+        return categroyData;
+    }
+
     @Override
     public Fragment getItem(int position) {
         CookListFragment cookListFragment = new CookListFragment();

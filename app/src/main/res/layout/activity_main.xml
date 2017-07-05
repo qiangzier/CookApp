@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/color_F5F5F5">
 
-        <android.support.design.widget.TabLayout
+        <!--<android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
             android:layout_height="44dp"
@@ -22,7 +22,19 @@
             app:tabTextColor="@color/color_666666"
             app:tabMode="scrollable"
             app:tabGravity="center"
-            />
+            />-->
+
+        <com.hzq.indicator.TabIndicator
+            android:id="@+id/tabIndicator"
+            android:layout_width="match_parent"
+            android:layout_toLeftOf="@+id/add"
+            android:layout_height="44dp"
+            android:background="@color/color_F2F2F2"
+            app:tab_indicatorColor="@color/colorPrimary"
+            app:tab_selectTextColor="@color/colorPrimary"
+            app:tab_textColor="@color/color_666666"
+            app:tab_textSize="16sp"
+            app:tab_indicatorHeight="2dp"/>
 
         <ImageView
             android:id="@+id/add"
