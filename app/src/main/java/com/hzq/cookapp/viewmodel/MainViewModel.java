@@ -28,11 +28,9 @@ public class MainViewModel extends BaseViewModel {
     public MainViewModel(Application application) {
         super(application);
 
-//        showDialog();
         CategroyDataStore.getParentCateGroy(new Callback<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {
-//                dismissDialog();
             }
         });
         observableData = Transformations.switchMap(CookDatabaseHelper.getIsCreatedDatabase(),

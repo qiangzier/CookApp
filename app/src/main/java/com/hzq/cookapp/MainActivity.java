@@ -10,11 +10,16 @@ import android.widget.ImageView;
 
 import com.hzq.cookapp.adapter.ViewPagerAdapter;
 import com.hzq.cookapp.db.entity.CategoryEntity;
+import com.hzq.cookapp.utils.CookUtils;
 import com.hzq.cookapp.viewmodel.MainViewModel;
 import com.hzq.indicator.TabIndicator;
 import com.hzq.indicator.callback.OnGetIndicatorViewAdapter;
 import com.hzq.indicator.impl.IPagerIndicator;
 import com.hzq.indicator.impl.indicators.WrapPagerIndicator;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,9 +46,11 @@ public class MainActivity extends BaseActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
         initToolbar();
         setTitle("厨房助手");
-
+        CookUtils.setImmersiveStatusBar(this);
+        CookUtils.setImmersiveStatusBarToolbar(getToolbar(), this);
         pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),data);
         viewPager.setAdapter(pagerAdapter);
 
@@ -66,16 +73,32 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 CookChannelActivity.startAction(MainActivity.this);
-//                GeneratorActivity.startAction(MainActivity.this, CategroyFragment.class,"");
             }
         });
 
-        MainViewModel.getInstance(this).getObservableData().observe(this, new Observer<List<CategoryEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<CategoryEntity> selectCategoryEntities) {
-                pagerAdapter.setCategroyData(selectCategoryEntities);
-            }
-        });
+        MainViewModel.getInstance(this).getObservableData().observe(this, observer);
     }
+
+    Observer<List<CategoryEntity>> observer = new Observer<List<CategoryEntity>>() {
+        @Override
+        public void onChanged(@Nullable List<CategoryEntity> selectCategoryEntities) {
+            pagerAdapter.setCategroyData(selectCategoryEntities);
+        }
+    };
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(MessageEvent event) {
+        if(event != null && event.type == MessageEvent.CLICK_MODE){
+            viewPager.setCurrentItem(event.position - 1);
+        }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
 
 }

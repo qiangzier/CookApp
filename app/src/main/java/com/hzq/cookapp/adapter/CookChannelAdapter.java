@@ -1,5 +1,7 @@
 package com.hzq.cookapp.adapter;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Handler;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v7.widget.RecyclerView;
@@ -12,11 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.hzq.cookapp.MessageEvent;
 import com.hzq.cookapp.R;
 import com.hzq.cookapp.db.entity.CategoryEntity;
 import com.hzq.cookapp.helper.ItemTouchHelperAdapter;
 import com.hzq.cookapp.utils.ChannelManagerHelper;
 import com.hzq.cookapp.viewmodel.CookChannelViewModel;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,6 +104,13 @@ public class CookChannelAdapter extends RecyclerView.Adapter<CookChannelAdapter.
                 public void onClick(View v) {
                     if(isEditMode) {
                         ChannelManagerHelper.setMyChannelClick((RecyclerView) parent, holder, myChannelLastPosition, callback);
+                    }else{
+                        Context context = parent.getContext();
+                        if(context instanceof Activity){
+                            EventBus.getDefault().post(new MessageEvent(holder.getAdapterPosition()));
+                            Activity a = (Activity) context;
+                            a.finish();
+                        }
                     }
                 }
             });

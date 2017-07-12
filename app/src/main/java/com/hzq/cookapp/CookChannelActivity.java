@@ -8,9 +8,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.hzq.cookapp.adapter.CookChannelAdapter;
 import com.hzq.cookapp.db.entity.CategoryEntity;
+import com.hzq.cookapp.fragment.CategroyFragment;
 import com.hzq.cookapp.helper.ItemDragHelperCallback;
 import com.hzq.cookapp.viewmodel.CookChannelViewModel;
 
@@ -69,6 +72,20 @@ public class CookChannelActivity extends BaseActivity {
             }
         });
         adapter.setViewModel(CookChannelViewModel.getInstance(this));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.item_menu,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_ok){
+            GeneratorActivity.startAction(this, CategroyFragment.class,"");
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public static void startAction(Context context){

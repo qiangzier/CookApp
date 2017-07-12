@@ -3,8 +3,8 @@
     package="com.hzq.cookapp">
 
     <!-- MobAPI相关-->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!--<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />-->
+    <!--<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />-->
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -19,7 +19,8 @@
 
         <meta-data android:name="Mob-AppKey" android:value="1edb7a8343900"/>
 
-        <activity android:name=".SplashActivity">
+        <activity android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
