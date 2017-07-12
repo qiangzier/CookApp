@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.hzq.cookapp.adapter.ViewPagerAdapter;
-import com.hzq.cookapp.db.entity.SelectCategoryEntity;
-import com.hzq.cookapp.fragment.CategroyFragment;
+import com.hzq.cookapp.db.entity.CategoryEntity;
 import com.hzq.cookapp.viewmodel.MainViewModel;
 import com.hzq.indicator.TabIndicator;
 import com.hzq.indicator.callback.OnGetIndicatorViewAdapter;
@@ -34,7 +33,7 @@ public class MainActivity extends BaseActivity {
 
 
     private ViewPagerAdapter pagerAdapter = null;
-    private List<SelectCategoryEntity> data = new ArrayList<>();
+    private List<CategoryEntity> data = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +65,14 @@ public class MainActivity extends BaseActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GeneratorActivity.startAction(MainActivity.this, CategroyFragment.class,"");
+                CookChannelActivity.startAction(MainActivity.this);
+//                GeneratorActivity.startAction(MainActivity.this, CategroyFragment.class,"");
             }
         });
 
-        MainViewModel.getInstance(this).getObservableData().observe(this, new Observer<List<SelectCategoryEntity>>() {
+        MainViewModel.getInstance(this).getObservableData().observe(this, new Observer<List<CategoryEntity>>() {
             @Override
-            public void onChanged(@Nullable List<SelectCategoryEntity> selectCategoryEntities) {
+            public void onChanged(@Nullable List<CategoryEntity> selectCategoryEntities) {
                 pagerAdapter.setCategroyData(selectCategoryEntities);
             }
         });

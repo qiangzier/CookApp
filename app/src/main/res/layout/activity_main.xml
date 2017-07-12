@@ -31,7 +31,7 @@
             android:layout_height="44dp"
             android:background="@color/color_F2F2F2"
             app:tab_indicatorColor="@color/colorPrimary"
-            app:tab_selectTextColor="@color/colorPrimary"
+            app:tab_selectTextColor="@color/color_FFFFFF"
             app:tab_textColor="@color/color_666666"
             app:tab_textSize="16sp"
             app:tab_indicatorHeight="2dp"/>

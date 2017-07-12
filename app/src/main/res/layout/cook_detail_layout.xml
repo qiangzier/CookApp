@@ -27,6 +27,8 @@
                     android:id="@+id/bgImg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:failureImage="@mipmap/img_default_bg1"
+                    app:failureImageScaleType="centerCrop"
                     android:transitionName="@string/transition_cook_detail_imgv_bg"/>
 
             </RelativeLayout>

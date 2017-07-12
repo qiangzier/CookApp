@@ -5,7 +5,6 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import com.hzq.cookapp.db.dao.CategroyDao;
-import com.hzq.cookapp.db.dao.SelectCategoryDao;
 
 /**
  * @author: hezhiqiang
@@ -23,6 +22,7 @@ public class CookDatabaseHelper {
     public static void init(Context context){
         cookDatabase = Room.databaseBuilder(context,
                 CookDatabase.class,CookDatabase.DATABASE_NAME)
+                .allowMainThreadQueries()
                 .build();
         isCreatedDatabase.setValue(true);
     }
@@ -39,7 +39,4 @@ public class CookDatabaseHelper {
         return cookDatabase.getCategrouDao();
     }
 
-    public static SelectCategoryDao getSelectCategoryDao(){
-        return cookDatabase.getSelectCategoryDao();
-    }
 }

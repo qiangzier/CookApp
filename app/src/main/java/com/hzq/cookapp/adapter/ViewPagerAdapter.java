@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.hzq.cookapp.R;
-import com.hzq.cookapp.db.entity.SelectCategoryEntity;
+import com.hzq.cookapp.db.entity.CategoryEntity;
 import com.hzq.cookapp.fragment.CookListFragment;
 
 import java.util.ArrayList;
@@ -21,19 +21,19 @@ import java.util.List;
 
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 
-    private List<SelectCategoryEntity> categroyData = new ArrayList<>();
+    private List<CategoryEntity> categroyData = new ArrayList<>();
 
-    public ViewPagerAdapter(FragmentManager fm,List<SelectCategoryEntity> list) {
+    public ViewPagerAdapter(FragmentManager fm,List<CategoryEntity> list) {
         super(fm);
         this.categroyData = list;
     }
 
-    public void setCategroyData(List<SelectCategoryEntity> categroyData) {
+    public void setCategroyData(List<CategoryEntity> categroyData) {
         this.categroyData = categroyData;
         notifyDataSetChanged();
     }
 
-    public List<SelectCategoryEntity> getCategroyData() {
+    public List<CategoryEntity> getCategroyData() {
         return categroyData;
     }
 

@@ -3,7 +3,6 @@ package com.hzq.cookapp;
 import android.app.Application;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.hzq.cookapp.db.CookDatabaseHelper;
 import com.hzq.cookapp.net.NetHelper;
 
 import okhttp3.OkHttpClient;
@@ -32,7 +31,7 @@ public class CookApplication extends Application {
     }
 
     private void initRetrofit(){
-        CookDatabaseHelper.init(this);
+//        CookDatabaseHelper.init(this);
 
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor();
         logger.setLevel(HttpLoggingInterceptor.Level.BODY);

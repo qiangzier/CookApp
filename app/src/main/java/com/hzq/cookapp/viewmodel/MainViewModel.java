@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentActivity;
 
 import com.hzq.cookapp.callback.Callback;
 import com.hzq.cookapp.db.CookDatabaseHelper;
-import com.hzq.cookapp.db.entity.SelectCategoryEntity;
+import com.hzq.cookapp.db.entity.CategoryEntity;
 import com.hzq.cookapp.utils.CategroyDataStore;
 
 import java.util.List;
@@ -24,7 +24,7 @@ import java.util.List;
 
 public class MainViewModel extends BaseViewModel {
 
-    private LiveData<List<SelectCategoryEntity>> observableData;
+    private LiveData<List<CategoryEntity>> observableData;
     public MainViewModel(Application application) {
         super(application);
 
@@ -36,18 +36,18 @@ public class MainViewModel extends BaseViewModel {
             }
         });
         observableData = Transformations.switchMap(CookDatabaseHelper.getIsCreatedDatabase(),
-                new Function<Boolean, LiveData<List<SelectCategoryEntity>>>() {
+                new Function<Boolean, LiveData<List<CategoryEntity>>>() {
             @Override
-            public LiveData<List<SelectCategoryEntity>> apply(Boolean input) {
+            public LiveData<List<CategoryEntity>> apply(Boolean input) {
                 if(!Boolean.TRUE.equals(input)){
                     return new MutableLiveData<>();
                 }
-                return CookDatabaseHelper.getSelectCategoryDao().getCategroys();
+                return CookDatabaseHelper.getCategroyDao().getCategroyIsSelected(true);
             }
         });
     }
 
-    public LiveData<List<SelectCategoryEntity>> getObservableData() {
+    public LiveData<List<CategoryEntity>> getObservableData() {
         return observableData;
     }
 

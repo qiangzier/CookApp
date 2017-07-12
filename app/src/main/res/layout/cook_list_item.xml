@@ -36,7 +36,7 @@
                 app:progressBarImage="@mipmap/project_loading_icon"
                 app:progressBarImageScaleType="centerCrop"
                 app:progressBarAutoRotateInterval="1500"
-                app:failureImage="@mipmap/project_error_default_icon"
+                app:failureImage="@mipmap/img_default_bg1"
                 app:failureImageScaleType="centerCrop"
                 android:background="@color/color_F5F5F5"
                 android:transitionName="@string/transition_cook_detail_imgv_bg"

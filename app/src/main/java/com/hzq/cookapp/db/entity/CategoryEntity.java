@@ -17,6 +17,8 @@ public class CategoryEntity {
     private String ctgId;        //0010001002",
     private String name;         //按菜品选择菜谱",
     private String parentId;     //0010001001"
+    private boolean isAddMyChannel;      //是否在首页展示
+    private int orderIndex;           //排序
 
     public Long getId() {
         return id;
@@ -48,5 +50,21 @@ public class CategoryEntity {
 
     public void setParentId(String parentId) {
         this.parentId = parentId;
+    }
+
+    public boolean isAddMyChannel() {
+        return isAddMyChannel;
+    }
+
+    public void setAddMyChannel(boolean addMyChannel) {
+        isAddMyChannel = addMyChannel;
+    }
+
+    public int getOrderIndex() {
+        return orderIndex;
+    }
+
+    public void setOrderIndex(int orderIndex) {
+        this.orderIndex = orderIndex;
     }
 }
