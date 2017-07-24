@@ -5,12 +5,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.hzq.cookapp.adapter.ViewPagerAdapter;
+import com.hzq.cookapp.components.searchview.MaterialSearchView;
 import com.hzq.cookapp.db.entity.CategoryEntity;
-import com.hzq.cookapp.utils.CookUtils;
 import com.hzq.cookapp.viewmodel.MainViewModel;
 import com.hzq.indicator.TabIndicator;
 import com.hzq.indicator.callback.OnGetIndicatorViewAdapter;
@@ -35,6 +37,8 @@ public class MainActivity extends BaseActivity {
     ViewPager viewPager;
     @BindView(R.id.tabIndicator)
     TabIndicator tabIndicator;
+    @BindView(R.id.searchView)
+    MaterialSearchView searchView;
 
 
     private ViewPagerAdapter pagerAdapter = null;
@@ -49,9 +53,9 @@ public class MainActivity extends BaseActivity {
         EventBus.getDefault().register(this);
         initToolbar();
         setTitle("厨房助手");
-        CookUtils.setImmersiveStatusBar(this);
-        CookUtils.setImmersiveStatusBarToolbar(getToolbar(), this);
-        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(),data);
+//        CookUtils.setImmersiveStatusBar(this);
+//        CookUtils.setImmersiveStatusBarToolbar(getToolbar(), this);
+        pagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), data);
         viewPager.setAdapter(pagerAdapter);
 
         tabIndicator.setGetIndicatorViewAdapter(new OnGetIndicatorViewAdapter() {
@@ -76,6 +80,21 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+        //搜索 // TODO: 2017/7/24  
+        searchView.attchToolbar(getToolbar());
+        searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
         MainViewModel.getInstance(this).getObservableData().observe(this, observer);
     }
 
@@ -88,11 +107,34 @@ public class MainActivity extends BaseActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if(event != null && event.type == MessageEvent.CLICK_MODE){
+        if (event != null && event.type == MessageEvent.CLICK_MODE) {
             viewPager.setCurrentItem(event.position - 1);
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if(searchView.onBackPressed()){
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.item_menu, menu);
+        menu.findItem(R.id.action_search).setVisible(true);
+        menu.findItem(R.id.action_ok).setVisible(false);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_search) {
+            searchView.showView();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onDestroy() {

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootView"
     android:orientation="vertical">
 
-    <include layout="@layout/app_bar" />
+    <include
+        android:id="@+id/title_bar"
+        layout="@layout/app_bar" />
 
     <RelativeLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_F5F5F5">
+        android:background="@color/color_F5F5F5"
+        android:layout_below="@+id/title_bar"
+        >
 
         <!--<android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
@@ -50,6 +56,13 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tab_layout"
+        />
 
-</LinearLayout>
+    <com.hzq.cookapp.components.searchview.MaterialSearchView
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:visibility="gone"/>
+</RelativeLayout>
